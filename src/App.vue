@@ -5,6 +5,7 @@ import DrawingCanvas from "./components/DrawableCanvas.vue"
 <template>
   <h1>Drawing Canvas</h1>
   <DrawingCanvas/>
+  <DrawingCanvas/>
 </template>
 
 <style scoped>
