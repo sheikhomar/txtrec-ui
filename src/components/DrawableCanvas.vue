@@ -8,7 +8,7 @@ const canvasId = `canvas-${uuid.v1()}`;
 onMounted(() => {
 
   let canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-  let dcm = new DrawableCanvasManager(canvas);
+  let dcm = new DrawableCanvasManager(canvas, false);
   console.log(`Uniuqe ID: ${uuid.v1()}`)
 })
 </script>

@@ -2,12 +2,13 @@ export class DrawableCanvasManager {
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
     private paint: boolean;
+    private enableTouch: boolean;
 
     private clickX: number[] = [];
     private clickY: number[] = [];
     private clickDrag: boolean[] = [];
 
-    constructor(canvas: HTMLCanvasElement) {
+    constructor(canvas: HTMLCanvasElement, enableTouch: boolean = true) {
         if (canvas == null) throw Error("Canvas cannot be null.");
         let context = canvas.getContext("2d");
         if (context == null) throw Error("Cannot create a drawing context.");
@@ -20,6 +21,7 @@ export class DrawableCanvasManager {
         this.canvas = canvas;
         this.context = context;
         this.paint = false;
+        this.enableTouch = enableTouch
 
         this.redraw();
         this.createUserEvents();
@@ -32,11 +34,13 @@ export class DrawableCanvasManager {
         canvas.addEventListener("mousemove", this.dragEventHandler);
         canvas.addEventListener("mouseup", this.releaseEventHandler);
         canvas.addEventListener("mouseout", this.cancelEventHandler);
-
-        canvas.addEventListener("touchstart", this.pressEventHandler);
-        canvas.addEventListener("touchmove", this.dragEventHandler);
-        canvas.addEventListener("touchend", this.releaseEventHandler);
-        canvas.addEventListener("touchcancel", this.cancelEventHandler);
+        
+        if (this.enableTouch) {
+            canvas.addEventListener("touchstart", this.pressEventHandler);
+            canvas.addEventListener("touchmove", this.dragEventHandler);
+            canvas.addEventListener("touchend", this.releaseEventHandler);
+            canvas.addEventListener("touchcancel", this.cancelEventHandler);
+        }
     }
 
     private redraw() {
