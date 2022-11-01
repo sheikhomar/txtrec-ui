@@ -138,7 +138,7 @@ export class DrawableCanvasManager {
         if (!this.isPressed) return;
         const coords = this.getCurrentCoordinates(e);
         const pressure = this.getTouchPressure(e);
-        const lineWidth = (Math.log(pressure + 1) * 10 * 0.2 + 1 * 0.8)
+        const lineWidth = (Math.log(pressure + 1) * 5)
         
         this.points.push({ x: coords.x, y: coords.y, lineWidth: lineWidth, color: "black" })
         this.draw(this.points);

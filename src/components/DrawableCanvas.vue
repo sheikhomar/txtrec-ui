@@ -19,7 +19,7 @@ onMounted(() => {
   
 <style scoped>
 canvas {
-    border: solid 1px rgb(74, 0, 223);
+    border: solid 1px rgb(0, 149, 17);
 }
 </style>
   
