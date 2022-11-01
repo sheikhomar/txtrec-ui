@@ -6,9 +6,8 @@ import { DrawableCanvasManager } from "@/DrawableCanvasManager";
 const canvasId = `canvas-${uuid.v1()}`;
 
 onMounted(() => {
-
-  let canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-  let dcm = new DrawableCanvasManager(canvas, false);
+  const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+  const dcm = new DrawableCanvasManager(canvas);
   console.log(`Uniuqe ID: ${uuid.v1()}`)
 })
 </script>
@@ -20,7 +19,7 @@ onMounted(() => {
   
 <style scoped>
 canvas {
-    border: solid 1px Red;
+    border: solid 1px rgb(74, 0, 223);
 }
 </style>
   
