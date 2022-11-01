@@ -125,22 +125,22 @@ export class DrawableCanvasManager {
 
     private pressEventHandler = (e: MouseEvent | TouchEvent) => {
         const coords = this.getCurrentCoordinates(e);
-        const pressure = this.getTouchPressure(e);
-        const lineWidth = Math.log(pressure + 1) * 5;
+        // const pressure = this.getTouchPressure(e);
+        // const lineWidth = Math.log(pressure + 1) * 5;
 
         this.isPressed = true;
 
-        this.points.push({ x: coords.x, y: coords.y, lineWidth: lineWidth, color: "black" })
+        this.points.push({ x: coords.x, y: coords.y, lineWidth: 4, color: "black" })
         this.draw(this.points);
     }
 
     private moveEventHandler = (e: MouseEvent | TouchEvent) => {
         if (!this.isPressed) return;
         const coords = this.getCurrentCoordinates(e);
-        const pressure = this.getTouchPressure(e);
-        const lineWidth = (Math.log(pressure + 1) * 5)
+        // const pressure = this.getTouchPressure(e);
+        // const lineWidth = (Math.log(pressure + 1) * 5)
         
-        this.points.push({ x: coords.x, y: coords.y, lineWidth: lineWidth, color: "black" })
+        this.points.push({ x: coords.x, y: coords.y, lineWidth: 4, color: "black" })
         this.draw(this.points);
         e.preventDefault();
     }
