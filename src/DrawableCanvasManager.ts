@@ -13,10 +13,6 @@ interface Coordinate {
 export class DrawableCanvasManager {
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
-
-    private clickX: number[] = [];
-    private clickY: number[] = [];
-    private clickDrag: boolean[] = [];
     private points: Point[] = [];
     private isPressed: boolean;
     private strokeHistory: object[] = [];
@@ -86,9 +82,7 @@ export class DrawableCanvasManager {
 
     private clearCanvas() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.clickX = [];
-        this.clickY = [];
-        this.clickDrag = [];
+        this.points = []
     }
 
     private clearEventHandler = () => {
