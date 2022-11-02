@@ -10,6 +10,11 @@ interface Coordinate {
     y: number;
 }
 
+interface TouchInfo {
+    pressure: number;
+    isStylus: boolean;
+}
+
 export class DrawableCanvasManager {
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
@@ -107,21 +112,25 @@ export class DrawableCanvasManager {
         return { x: mouseX, y: mouseY };
     }
 
-    private getTouchPressure = (e: MouseEvent | TouchEvent): number => {
-        let pressure = 0.1;
-        const touches = (e as TouchEvent).changedTouches;
-        if (touches) {
-            pressure = touches[0].force;
-            console.info(`Presure: ${pressure}`);
+    private extractTouchInfo = (e: MouseEvent | TouchEvent): TouchInfo => {
+        const touches = (e as TouchEvent).touches;
+        const touch = touches ? (touches[0] as TouchInit) : null;
+        const pressure = (touch && touch.force) ? touch.force : 1.0;
+        const isStylus = (touch && touch.touchType) ? touch.touchType !== "direct" : false;
+        if (touch) {
+            console.log(`touch.touchType:     ${touch.touchType}`);
+            console.log(`touch.force:         ${touch.force}`);
+            console.log(`touch.rotationAngle: ${touch.rotationAngle}`);
+            console.log(`touch.altitudeAngle: ${touch.altitudeAngle}`);
+            console.log(`touch.azimuthAngle: ${touch.azimuthAngle}`);
         } else {
-            pressure = 1.0;
+            console.log("Not touch")
         }
-        return pressure;
+        return { isStylus, pressure };
     }
 
     private pressEventHandler = (e: MouseEvent | TouchEvent) => {
         const coords = this.getCurrentCoordinates(e);
-        // const pressure = this.getTouchPressure(e);
         // const lineWidth = Math.log(pressure + 1) * 5;
         const lineWidth = this.fixedLineWidth;
         this.isPressed = true;
@@ -138,7 +147,6 @@ export class DrawableCanvasManager {
     private moveEventHandler = (e: MouseEvent | TouchEvent) => {
         if (!this.isPressed) return;
         const coords = this.getCurrentCoordinates(e);
-        // const pressure = this.getTouchPressure(e);
         // const lineWidth = (Math.log(pressure + 1) * 5)
         const lineWidth = this.fixedLineWidth;
         
