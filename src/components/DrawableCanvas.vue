@@ -32,6 +32,7 @@ function clearCanvas() {
     var confirmClearCanvas = confirm("Er du sikker på at du vil slette alt?");
     if (canvasManager && confirmClearCanvas) {
         canvasManager.clearCanvas();
+        canvasState.isEraserActivated = false;
     }
 }
 
