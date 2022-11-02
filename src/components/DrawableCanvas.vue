@@ -8,6 +8,9 @@ const canvasId = `canvas-${uuid.v1()}`;
 
 const isIpad = (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
+const isPerformingInference = ref(false);
+const resultText = ref("");
+
 const properties = defineProps({
     width: { type: Number, default: 700, required: false },
     height: { type: Number, default: 400, required: false },
@@ -65,6 +68,7 @@ const dataUriToBlob = (dataUri: string): Blob => {
 }
 
 function performInference() {
+    isPerformingInference.value = true;
     const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
     const dataUri = canvas.toDataURL();
     const imageBlob = dataUriToBlob(dataUri);
@@ -82,8 +86,12 @@ function performInference() {
         headers: { "Content-Type": "multipart/form-data" },
     }).then((response: AxiosResponse) => {
         console.log(response.data);
+        resultText.value = response.data.text;
     }).catch((response: AxiosResponse) => {
         console.log(response);
+        
+    }).finally(() => {
+        isPerformingInference.value = false;
     });
 }
 
@@ -94,27 +102,49 @@ const stylusStateButtonText = computed(() => {
 const drawingModeIcon = computed(() => {
     return canvasState.isEraserActivated ? "icon-eraser.png" : "icon-pen.png";
 });
+
+const drawingModeText = computed(() => {
+    return canvasState.isEraserActivated ? "✏ Slet" : "✏️ Skriv";
+});
+
+const inferenceButtonText = computed(() => {
+    return isPerformingInference.value ? "⌛ Genkender..." : "Genkend";
+});
+
 </script>
 
 <template>
-    <div class="canvas-toolbar">
-        <button @click="changeStylusState();">{{ stylusStateButtonText }}</button>
-        <button @click="clearCanvas()">Slet alt</button>
-        <button @click="changeDrawingMode()">
-            <img :src="drawingModeIcon" width="32" height="32" />
-        </button>
-        <button @click="performInference()">
-            Inference
-        </button>
-    </div>
-    <div class="canvas-item">
-        <canvas :id="canvasId" :width="width" :height="height"></canvas>
+    <div class="drawable-canvas">
+        <div class="toolbar">
+            <button @click="changeStylusState();">{{ stylusStateButtonText }}</button>
+            <button @click="clearCanvas()">Slet alt</button>
+            <button @click="changeDrawingMode()">
+                <img :src="drawingModeIcon" width="32" height="32" />
+            </button>
+            <button @click="performInference()" :disabled="isPerformingInference">
+                {{ inferenceButtonText }}
+            </button>
+        </div>
+        <div class="canvas">
+            <canvas :id="canvasId" :width="width" :height="height"></canvas>
+        </div>
+        <div class="result">
+            <input type="text" :value="resultText" />
+        </div>
     </div>
 </template>
 
 <style scoped>
+.drawable-canvas {
+    padding-bottom: 10px;
+}
 canvas {
     border: solid 1px rgb(0, 149, 17);
+}
+.result input {
+    padding: 5px;
+    width: 690px;
+    font-size: 1.2em;
 }
 </style>
   
