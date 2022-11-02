@@ -46,6 +46,7 @@ class DrawableCanvasManager {
         this.isPressed = false;
 
         this.createUserEvents();
+        this.clearCanvas();
     }
 
     private createUserEvents() {
@@ -73,7 +74,8 @@ class DrawableCanvasManager {
     private draw(stroke: Point[]) {
         if (this.state.isEraserActivated) {
             const lastPoint = stroke[stroke.length - 1];
-            this.context.globalCompositeOperation = "destination-out";
+            this.context.globalCompositeOperation = "source-over";
+            this.context.strokeStyle = "white";
             this.context.beginPath();
             this.context.arc(lastPoint.x,lastPoint.y,8,0,Math.PI*2,false);
             this.context.fill();
@@ -105,7 +107,9 @@ class DrawableCanvasManager {
     }
 
     public clearCanvas() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        // this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.fillStyle = "white";
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.points = []
     }
 

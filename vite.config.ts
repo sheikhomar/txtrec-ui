@@ -13,4 +13,13 @@ export default defineConfig({
     },
   },
   base: process.env.NODE_ENV === "production" ? "/txtrec-ui/" : "/",
+  server: {
+    proxy: {
+      "/predict": {
+        target: "http://inference.text-recognizer.devaks.cloudatp.dk/",
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  }
 });
