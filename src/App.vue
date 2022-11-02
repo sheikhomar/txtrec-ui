@@ -4,8 +4,9 @@ import DrawingCanvas from "./components/DrawableCanvas.vue"
 
 <template>
   <h1>Drawing Canvas</h1>
-  <DrawingCanvas :width="700" :height="100"/>
-  <DrawingCanvas />
+  <DrawingCanvas :width="700" :height="70" />
+  <DrawingCanvas :width="700" :height="70" />
+  <DrawingCanvas :width="700" :height="70" />
 </template>
 
 <style scoped>
