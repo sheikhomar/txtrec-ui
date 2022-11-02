@@ -13,7 +13,8 @@ const properties = defineProps({
 });
 
 const canvasState: DrawableCanvasState = reactive({
-    onlyStylus: isIpad
+    onlyStylus: isIpad,
+    isEraserActivated: false,
 });
 
 let canvasManager: DrawableCanvasManager | null = null;
@@ -34,8 +35,16 @@ function clearCanvas() {
     }
 }
 
+function changeDrawingMode() {
+    canvasState.isEraserActivated = !canvasState.isEraserActivated;
+}
+
 const stylusStateButtonText = computed(() => {
     return canvasState.onlyStylus ? "✍️" : "👆";
+});
+
+const drawingModeIcon = computed(() => {
+    return canvasState.isEraserActivated ? "icon-eraser.png" : "icon-pen.png";
 });
 </script>
 
@@ -43,6 +52,9 @@ const stylusStateButtonText = computed(() => {
     <div class="canvas-toolbar">
         <button @click="changeStylusState();">{{ stylusStateButtonText }}</button>
         <button @click="clearCanvas()">Slet alt</button>
+        <button @click="changeDrawingMode()">
+            <img :src="drawingModeIcon" width="32" height="32" />
+        </button>
     </div>
     <div class="canvas-item">
         <canvas :id="canvasId" :width="width" :height="height"></canvas>

@@ -17,6 +17,7 @@ interface TouchInfo {
 
 interface DrawableCanvasState {
     onlyStylus: boolean;
+    isEraserActivated: boolean;
 }
 
 class DrawableCanvasManager {
@@ -70,6 +71,16 @@ class DrawableCanvasManager {
      * @return {void}
      */
     private draw(stroke: Point[]) {
+        if (this.state.isEraserActivated) {
+            const lastPoint = stroke[stroke.length - 1];
+            this.context.globalCompositeOperation = "destination-out";
+            this.context.beginPath();
+            this.context.arc(lastPoint.x,lastPoint.y,8,0,Math.PI*2,false);
+            this.context.fill();
+            return;
+        }
+
+        this.context.globalCompositeOperation = "source-over";
         this.context.strokeStyle = "black";
         this.context.lineCap = "round";
         this.context.lineJoin = "round";
