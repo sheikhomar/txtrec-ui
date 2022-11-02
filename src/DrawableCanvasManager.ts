@@ -131,6 +131,8 @@ export class DrawableCanvasManager {
 
     private pressEventHandler = (e: MouseEvent | TouchEvent) => {
         const coords = this.getCurrentCoordinates(e);
+        const touchInfo = this.extractTouchInfo(e);
+        if (!touchInfo.isStylus) return;
         // const lineWidth = Math.log(pressure + 1) * 5;
         const lineWidth = this.fixedLineWidth;
         this.isPressed = true;
