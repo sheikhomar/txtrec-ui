@@ -16,8 +16,9 @@ export class DrawableCanvasManager {
     private points: Point[] = [];
     private isPressed: boolean;
     private strokeHistory: object[] = [];
+    private fixedLineWidth: number;
 
-    constructor(canvas: HTMLCanvasElement) {
+    constructor(canvas: HTMLCanvasElement, fixedLineWidth: number = 2) {
         if (canvas == null) throw Error("Canvas cannot be null.");
         let context = canvas.getContext("2d");
         if (context == null) throw Error("Cannot create a drawing context.");
@@ -30,6 +31,7 @@ export class DrawableCanvasManager {
         this.canvas = canvas;
         this.context = context;
         this.isPressed = false;
+        this.fixedLineWidth = fixedLineWidth;
 
         this.createUserEvents();
     }
@@ -121,10 +123,15 @@ export class DrawableCanvasManager {
         const coords = this.getCurrentCoordinates(e);
         // const pressure = this.getTouchPressure(e);
         // const lineWidth = Math.log(pressure + 1) * 5;
-
+        const lineWidth = this.fixedLineWidth;
         this.isPressed = true;
 
-        this.points.push({ x: coords.x, y: coords.y, lineWidth: 4, color: "black" })
+        this.points.push({
+            x: coords.x,
+            y: coords.y,
+            lineWidth: lineWidth,
+            color: "black"
+        })
         this.draw(this.points);
     }
 
@@ -133,8 +140,15 @@ export class DrawableCanvasManager {
         const coords = this.getCurrentCoordinates(e);
         // const pressure = this.getTouchPressure(e);
         // const lineWidth = (Math.log(pressure + 1) * 5)
+        const lineWidth = this.fixedLineWidth;
         
-        this.points.push({ x: coords.x, y: coords.y, lineWidth: 4, color: "black" })
+        this.points.push({
+            x: coords.x,
+            y: coords.y,
+            lineWidth: lineWidth,
+            color: "black"
+        })
+
         this.draw(this.points);
         e.preventDefault();
     }
@@ -143,5 +157,4 @@ export class DrawableCanvasManager {
         this.isPressed = false;
         this.points = [];
     }
-
 }
