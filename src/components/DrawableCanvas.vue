@@ -5,13 +5,15 @@ import { DrawableCanvasManager, type DrawableCanvasState } from "@/DrawableCanva
 
 const canvasId = `canvas-${uuid.v1()}`;
 
+const isIpad = (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
 const properties = defineProps({
     width: { type: Number, default: 700, required: false },
     height: { type: Number, default: 400, required: false },
 });
 
 const canvasState: DrawableCanvasState = reactive({
-    onlyStylus: false
+    onlyStylus: isIpad
 });
 
 let canvasManager: DrawableCanvasManager | null = null;
@@ -33,7 +35,7 @@ function clearCanvas() {
 }
 
 const stylusStateButtonText = computed(() => {
-    return canvasState.onlyStylus ? "Stylus-only mode" : "Touch mode";
+    return canvasState.onlyStylus ? "✍️" : "👆";
 });
 </script>
 
