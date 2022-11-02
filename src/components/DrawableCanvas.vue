@@ -78,7 +78,7 @@ function performInference() {
     const url = (process.env.NODE_ENV === "production") ? 
         "http://inference.text-recognizer.devaks.cloudatp.dk/" :
         "/predict";
-
+    console.log(`URL: ${url}`);
     axios({
         method: "post",
         url: url,
