@@ -15,28 +15,34 @@ interface TouchInfo {
     isStylus: boolean;
 }
 
-export class DrawableCanvasManager {
+interface DrawableCanvasState {
+    onlyStylus: boolean;
+}
+
+class DrawableCanvasManager {
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
     private points: Point[] = [];
     private isPressed: boolean;
     private strokeHistory: object[] = [];
-    private fixedLineWidth: number;
+    private fixedLineWidth: number = 2;
+    private state: DrawableCanvasState;
 
-    constructor(canvas: HTMLCanvasElement, fixedLineWidth: number = 2) {
+    constructor(canvas: HTMLCanvasElement, state: DrawableCanvasState) {
         if (canvas == null) throw Error("Canvas cannot be null.");
         let context = canvas.getContext("2d");
         if (context == null) throw Error("Cannot create a drawing context.");
-        
-        context.lineCap = "round";
-        context.lineJoin = "round";
-        context.strokeStyle = "black";
-        context.lineWidth = 2;
+        if (state == null) throw Error("State is required.")
 
         this.canvas = canvas;
         this.context = context;
+        this.context.lineCap = "round";
+        this.context.lineJoin = "round";
+        this.context.strokeStyle = "black";
+        this.context.lineWidth = this.fixedLineWidth;
+        this.state = state;
+
         this.isPressed = false;
-        this.fixedLineWidth = fixedLineWidth;
 
         this.createUserEvents();
     }
@@ -117,22 +123,13 @@ export class DrawableCanvasManager {
         const touch = touches ? (touches[0] as TouchInit) : null;
         const pressure = (touch && touch.force) ? touch.force : 1.0;
         const isStylus = (touch && touch.touchType) ? touch.touchType !== "direct" : false;
-        if (touch) {
-            console.log(`touch.touchType:     ${touch.touchType}`);
-            console.log(`touch.force:         ${touch.force}`);
-            console.log(`touch.rotationAngle: ${touch.rotationAngle}`);
-            console.log(`touch.altitudeAngle: ${touch.altitudeAngle}`);
-            console.log(`touch.azimuthAngle: ${touch.azimuthAngle}`);
-        } else {
-            console.log("Not touch")
-        }
         return { isStylus, pressure };
     }
 
     private pressEventHandler = (e: MouseEvent | TouchEvent) => {
         const coords = this.getCurrentCoordinates(e);
         const touchInfo = this.extractTouchInfo(e);
-        if (!touchInfo.isStylus) return;
+        if (this.state.onlyStylus && !touchInfo.isStylus) return;
         // const lineWidth = Math.log(pressure + 1) * 5;
         const lineWidth = this.fixedLineWidth;
         this.isPressed = true;
@@ -167,4 +164,9 @@ export class DrawableCanvasManager {
         this.isPressed = false;
         this.points = [];
     }
+}
+
+export {
+    type DrawableCanvasState,
+    DrawableCanvasManager,
 }
