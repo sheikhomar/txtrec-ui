@@ -5,22 +5,26 @@ import { DrawableCanvasManager, type DrawableCanvasState } from "@/DrawableCanva
 
 const canvasId = `canvas-${uuid.v1()}`;
 
-let dcs: DrawableCanvasState = reactive({
-    onlyStylus: true
+const properties = defineProps({
+    width: { type: Number, default: 700, required: false },
+    height: { type: Number, default: 400, required: false },
+});
+
+const canvasState: DrawableCanvasState = reactive({
+    onlyStylus: false
 });
 
 onMounted(() => {
   const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-  new DrawableCanvasManager(canvas, dcs);
-  console.log(`Uniuqe ID: ${uuid.v1()}`)
+  new DrawableCanvasManager(canvas, canvasState);
 })
 
 function changeStylusState() {
-    dcs.onlyStylus = !dcs.onlyStylus;
+    canvasState.onlyStylus = !canvasState.onlyStylus;
 }
 
 const stylusStateButtonText = computed(() => {
-    return dcs.onlyStylus ? "Stylus-only mode" : "Touch mode";
+    return canvasState.onlyStylus ? "Stylus-only mode" : "Touch mode";
 });
 </script>
 <template>
@@ -28,9 +32,8 @@ const stylusStateButtonText = computed(() => {
         <button @click="changeStylusState();">{{ stylusStateButtonText }}</button>
     </div>
     <div class="canvas-item">
-        <canvas :id="canvasId" width="700" height="420"></canvas>
+        <canvas :id="canvasId" :width="width" :height="height"></canvas>
     </div>
-    
 </template>
   
 <style scoped>
