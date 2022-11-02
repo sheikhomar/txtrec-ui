@@ -14,28 +14,39 @@ const canvasState: DrawableCanvasState = reactive({
     onlyStylus: false
 });
 
+let canvasManager: DrawableCanvasManager | null = null;
+
 onMounted(() => {
   const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-  new DrawableCanvasManager(canvas, canvasState);
+  canvasManager = new DrawableCanvasManager(canvas, canvasState);
 })
 
 function changeStylusState() {
     canvasState.onlyStylus = !canvasState.onlyStylus;
 }
 
+function clearCanvas() {
+    var confirmClearCanvas = confirm("Er du sikker på at du vil slette alt?");
+    if (canvasManager && confirmClearCanvas) {
+        canvasManager.clearCanvas();
+    }
+}
+
 const stylusStateButtonText = computed(() => {
     return canvasState.onlyStylus ? "Stylus-only mode" : "Touch mode";
 });
 </script>
+
 <template>
     <div class="canvas-toolbar">
         <button @click="changeStylusState();">{{ stylusStateButtonText }}</button>
+        <button @click="clearCanvas()">Slet alt</button>
     </div>
     <div class="canvas-item">
         <canvas :id="canvasId" :width="width" :height="height"></canvas>
     </div>
 </template>
-  
+
 <style scoped>
 canvas {
     border: solid 1px rgb(0, 149, 17);
