@@ -6,18 +6,21 @@ const props = defineProps({
   isEditMode: { type: Boolean, required: false },
 });
 
+const emit = defineEmits<{
+  (event: 'text:update', newValue: string): void
+}>()
+
 const isEditMode = ref(props.isEditMode ?? false);
-const newText = ref(props.text);
 const edittedText = ref(props.text);
 
 const editButtonClick = () => {
-    edittedText.value = newText.value;
+    edittedText.value = props.text;
     isEditMode.value = true;
 };
 
 const saveButtonClick = () => {
-    newText.value = edittedText.value;
     isEditMode.value = false;
+    emit.call(this, "text:update", edittedText.value);
 };
 
 const cancelButtonClick = () => {
@@ -35,7 +38,7 @@ const cancelButtonClick = () => {
                 <button @click="cancelButtonClick">Annuller</button>
             </div>
             <div v-else class="view-mode">
-                <p>{{ newText }}</p>
+                <p>{{ props.text }}</p>
                 <button @click="editButtonClick">Ret</button>
             </div>
         </div>

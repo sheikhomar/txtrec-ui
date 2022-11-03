@@ -49,6 +49,11 @@ function changeDrawingMode() {
     canvasState.isEraserActivated = !canvasState.isEraserActivated;
 }
 
+function textUpdated(newValue: string) {
+    resultText.value = newValue;
+    console.log("New value: " + newValue);
+}
+
 const dataUriToBlob = (dataUri: string): Blob => {
     const parts = dataUri.split(",");
     const headerPart = parts[0];
@@ -140,7 +145,7 @@ const inferenceButtonText = computed(() => {
             </div>
             <canvas :id="canvasId" :width="width" :height="height"></canvas>
             <div class="result">
-                <EditableText :text="resultText" />
+                <EditableText :text="resultText" @text:update="textUpdated" />
             </div>
         </div>
     </div>
