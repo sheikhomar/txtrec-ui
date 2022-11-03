@@ -16,7 +16,7 @@ const resultText = ref("");
 const errorMsg = ref("");
 
 const properties = defineProps({
-    width: { type: Number, default: 950, required: false },
+    width: { type: Number, default: 1000, required: false },
     height: { type: Number, default: 73, required: false },
 });
 
