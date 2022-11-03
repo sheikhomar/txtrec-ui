@@ -5,7 +5,7 @@ import DrawingCanvas from "./components/DrawableCanvas.vue";
 
 const children = ref([DrawingCanvas, DrawingCanvas]);
 
-const beforeWindowUnload = (e: Event) => {
+const beforeWindowUnload = (e: any) => {
   e = e || window.event;
   const msg = "Er du sikker på at du vil forlade siden? Du mister al dit arbejde.";
   if (e) {
