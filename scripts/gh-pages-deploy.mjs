@@ -24,11 +24,11 @@ import { execa } from "execa";
     ]);
     console.log("Pushing to gh-pages...");
     await execa("git", ["push", "origin", "HEAD:gh-pages", "--force"]);
-    if (process.platform === "win32") {
-      await execa("Remove-Item", ["-Recurse", folderName]);
-    } else {
-      await execa("rm", ["-r", folderName]);
-    }
+    // if (process.platform === "win32") {
+    //   await execa("Remove-Item", ["-Recurse", folderName]);
+    // } else {
+    //   await execa("rm", ["-r", folderName]);
+    // }
     await execa("git", ["checkout", "-f", "main"]);
     await execa("git", ["branch", "-D", "gh-pages"]);
     console.log("Successfully deployed, check your settings");
