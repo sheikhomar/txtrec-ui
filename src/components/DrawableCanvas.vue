@@ -2,6 +2,7 @@
 import { ref, onMounted, computed, reactive, inject } from 'vue'
 import { uuid } from 'vue-uuid';
 import { DrawableCanvasManager, type DrawableCanvasState } from "@/DrawableCanvasManager";
+import EditableText from './EditableText.vue';
 import type { AxiosResponse } from 'axios';
 
 const canvasId = `canvas-${uuid.v1()}`;
@@ -139,7 +140,7 @@ const inferenceButtonText = computed(() => {
             </div>
             <canvas :id="canvasId" :width="width" :height="height"></canvas>
             <div class="result">
-                <input type="text" :value="resultText" />
+                <EditableText :text="resultText" />
             </div>
         </div>
     </div>
@@ -177,15 +178,5 @@ const inferenceButtonText = computed(() => {
 canvas {
     border: solid 1px rgb(131, 131, 131);
 }
-
-.result  {
-    padding-top: 5px;
-}
-.result input {
-    padding: 5px;
-    width: 400px;
-    font-size: 1.2em;
-}
-
 </style>
   

@@ -11,6 +11,13 @@ import "./assets/main.css";
 
 const app = withUUID(createApp(App));
 
+// Register a global custom directive called `v-focus`
+app.directive("focus", {
+  mounted(el) {
+    el.focus();
+  }
+});
+
 app.use(createPinia());
 app.use(router);
 app.use(VueAxios, axios)
