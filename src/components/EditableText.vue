@@ -60,7 +60,8 @@ const cancelButtonClick = () => {
     align-items: center;
 }
 
-.view-mode p,.edit-mode input {
+.view-mode p,
+.edit-mode input {
     margin: 0;
     padding: 5px;
     flex-grow: 1;
@@ -68,6 +69,11 @@ const cancelButtonClick = () => {
     font-size: 15px;;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 25px;
+}
+
+.edit-mode input {
+    height: 35px;
+    margin-bottom: 2px;
 }
 
 button {
