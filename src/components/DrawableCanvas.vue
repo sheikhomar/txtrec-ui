@@ -162,7 +162,7 @@ const inferenceButtonText = computed(() => {
 }
 .left-bar {
     padding-top: 30px;
-    width: 40px;;
+    width: 35px;
 }
 .left-bar button {
     background-color: #F3F3F3;
@@ -171,17 +171,13 @@ const inferenceButtonText = computed(() => {
     padding: 0;
     margin: 0;
     font-size: 17px;
-    border: solid 1px #808080;
-    border-radius: 2px;
+    border: solid 1px var(--color-background-mute);
 }
 .canvas-box .toolbar {
     height: 30px;
 }
 .canvas-box .toolbar button {
     margin-left: 10px;
-    border: solid 1px #808080;
-    border-radius: 2px;
-    background-color: #F3F3F3;
 }
 canvas {
     border: solid 1px rgb(131, 131, 131);
@@ -193,6 +189,9 @@ canvas {
     color: red;
     font-size: 12px;
     margin-left: 10px;
+}
+button.stylus-state {
+    opacity: 0.1;
 }
 </style>
   

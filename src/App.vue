@@ -21,7 +21,10 @@ const addNewComponent = () => {
   <h1>Håndskriftsgenkendelse</h1>
   <p>Vi har bygget et system til at genkende og digitalisere håndskrevne tekster.</p>
   <p>Sådant et system er virkelig smart da det kan anvendes til at effektivere arbejdsgangene i ATP når det kommer til behandling af bl.a. håndskrevne blanketter fra borgere.</p>
-  <p>Systemet har dog lidt svært ved at genkende danske tegn. Kan du hjælpe os med at gøre den bedre?</p>
+  <p>
+    Systemet har dog lidt svært ved at genkende danske tegn.<br/>
+    Kan du hjælpe os med at gøre den bedre?
+  </p>
   <p>Sådan bruger du systemet:</p>
   <ul>
     <li>Skriv noget tekst i det hvide felt med pennen.</li>
@@ -49,6 +52,6 @@ button.new-line {
   padding: 10px;
 }
 p, li {
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 </style>
