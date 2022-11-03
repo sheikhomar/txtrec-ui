@@ -78,6 +78,8 @@ const dataUriToBlob = (dataUri: string): Blob => {
 
 function performInference() {
     isPerformingInference.value = true;
+    errorMsg.value = "";
+
     const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
     const dataUri = canvas.toDataURL();
     const imageBlob = dataUriToBlob(dataUri);
