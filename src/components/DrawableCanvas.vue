@@ -76,7 +76,7 @@ function performInference() {
     formData.append("img", imageBlob);
 
     const url = (process.env.NODE_ENV === "production") ? 
-        "http://inference.text-recognizer.devaks.cloudatp.dk/" :
+        "https://inference.text-recognizer.devaks.cloudatp.dk/" :
         "/predict";
     console.log(`URL: ${url}`);
     axios({
