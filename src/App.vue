@@ -48,7 +48,7 @@ const addNewComponent = () => {
   padding-top: 20px;
 }
 button.new-line {
-  margin-left: 50px;
+  margin-left: 35px;
   padding: 10px;
 }
 p, li {

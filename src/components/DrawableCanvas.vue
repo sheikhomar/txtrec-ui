@@ -16,7 +16,7 @@ const resultText = ref("");
 const errorMsg = ref("");
 
 const properties = defineProps({
-    width: { type: Number, default: 700, required: false },
+    width: { type: Number, default: 950, required: false },
     height: { type: Number, default: 73, required: false },
 });
 
@@ -138,7 +138,7 @@ const inferenceButtonText = computed(() => {
 
         <div class="canvas-box">
             <div class="toolbar"> 
-                <label><input type="radio" v-model="canvasState.isEraserActivated" :value="false" :name="stylusModeRadioId" />Skriv</label>
+                <label><input type="radio" v-model="canvasState.isEraserActivated" :value="false" :name="stylusModeRadioId" />Skrive</label>
                 <label><input type="radio" v-model="canvasState.isEraserActivated" :value="true" :name="stylusModeRadioId" />Viske</label>
                 <button @click="clearCanvas()">Ryd linje</button>
                 <button @click="performInference()" :disabled="isPerformingInference">
@@ -191,7 +191,7 @@ canvas {
     margin-left: 10px;
 }
 button.stylus-state {
-    opacity: 0.1;
+    opacity: 0.4;
 }
 </style>
   

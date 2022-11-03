@@ -65,7 +65,7 @@ const cancelButtonClick = () => {
     margin: 0;
     padding: 5px;
     flex-grow: 1;
-    border: solid 1px #efefef;
+    border: solid 1px rgb(213, 213, 213);
     font-size: 15px;;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 25px;
