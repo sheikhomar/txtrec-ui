@@ -129,6 +129,7 @@ const canvasStyle = computed(() => {
     if (canvasState.isEraserActivated) {
         return {
             cursor: `url(${cursorEraserUrl}), pointer`,
+            borderColor: "#f69c9c",
         };
     }
 
