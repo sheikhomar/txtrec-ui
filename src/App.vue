@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, reactive, inject } from 'vue'
+import { ref, nextTick } from 'vue'
 
 import DrawingCanvas from "./components/DrawableCanvas.vue";
 
@@ -7,6 +7,12 @@ const children = ref([DrawingCanvas, DrawingCanvas]);
 
 const addNewComponent = () => {
   children.value.push(DrawingCanvas);
+  nextTick(() => {
+    window.scrollTo({
+      top: document.body.scrollHeight, 
+      behavior: "smooth", 
+    });
+  });
 }
 </script>
 
