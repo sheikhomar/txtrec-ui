@@ -5,6 +5,8 @@ import { DrawableCanvasManager, type DrawableCanvasState } from "@/DrawableCanva
 import EditableText from './EditableText.vue';
 import type { AxiosResponse } from 'axios';
 
+import cursorEraserUrl from '../assets/cursor-eraser.png';
+
 const canvasId = `canvas-${uuid.v1()}`;
 
 const stylusModeRadioId = canvasId + "-eraser";
@@ -123,6 +125,16 @@ const inferenceButtonText = computed(() => {
     return isPerformingInference.value ? "⌛ Genkender..." : "Genkend";
 });
 
+const canvasStyle = computed(() => {
+    if (canvasState.isEraserActivated) {
+        return {
+            cursor: `url(${cursorEraserUrl}), pointer`,
+        };
+    }
+
+    return { };
+});
+
 </script>
 
 <template>
@@ -146,7 +158,7 @@ const inferenceButtonText = computed(() => {
                 </button>
                 <span v-if="errorMsg.length > 0" class="error">📢 Der opstod en fejl: {{ errorMsg }}</span>
             </div>
-            <canvas :id="canvasId" :width="width" :height="height" :class="canvasState.isEraserActivated ? 'eraser': ''"></canvas>
+            <canvas :id="canvasId" :width="width" :height="height" :style="canvasStyle"></canvas>
             <div class="result">
                 <EditableText :text="resultText" @text:update="textUpdated" />
             </div>
@@ -181,9 +193,6 @@ const inferenceButtonText = computed(() => {
 }
 canvas {
     border: solid 1px rgb(131, 131, 131);
-}
-canvas.eraser {
-    cursor: url("cursor-eraser.png"), pointer
 }
 .toolbar label {
     margin-right: 7px;
