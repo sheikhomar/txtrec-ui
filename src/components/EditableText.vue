@@ -36,7 +36,7 @@ const cancelButtonClick = () => {
                 <input 
                     v-model="edittedText"
                     v-focus
-                    type="text"
+                    type="search"
                     spellcheck="false"
                     autocomplete="off"
                     autocorrect="off"
