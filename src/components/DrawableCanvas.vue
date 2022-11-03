@@ -13,6 +13,7 @@ const isIpad = (navigator.userAgent.includes("Mac") && "ontouchend" in document)
 
 const isPerformingInference = ref(false);
 const resultText = ref("");
+const errorMsg = ref("");
 
 const properties = defineProps({
     width: { type: Number, default: 700, required: false },
@@ -95,9 +96,10 @@ function performInference() {
     }).then((response: AxiosResponse) => {
         console.log(response.data);
         resultText.value = response.data.text;
-    }).catch((response: AxiosResponse) => {
-        console.log(response);
-        
+    }).catch((err: Error) => {
+        errorMsg.value = err.message;
+        console.log(`Failed with ${err.name}: ${err.message}`);
+        console.log(`Stack trace: ${err.stack}`);
     }).finally(() => {
         isPerformingInference.value = false;
     });
@@ -140,6 +142,7 @@ const inferenceButtonText = computed(() => {
                 <button @click="performInference()" :disabled="isPerformingInference">
                     {{ inferenceButtonText }}
                 </button>
+                <span v-if="errorMsg.length > 0" class="error">📢 Der opstod en fejl: {{ errorMsg }}</span>
             </div>
             <canvas :id="canvasId" :width="width" :height="height"></canvas>
             <div class="result">
@@ -183,6 +186,11 @@ canvas {
 }
 .toolbar label {
     margin-right: 7px;
+}
+.error {
+    color: red;
+    font-size: 12px;
+    margin-left: 10px;
 }
 </style>
   
