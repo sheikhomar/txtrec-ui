@@ -6,6 +6,8 @@ import type { AxiosResponse } from 'axios';
 
 const canvasId = `canvas-${uuid.v1()}`;
 
+const stylusModeRadioId = canvasId + "-eraser";
+
 const isIpad = (navigator.userAgent.includes("Mac") && "ontouchend" in document);
 
 const isPerformingInference = ref(false);
@@ -13,7 +15,7 @@ const resultText = ref("");
 
 const properties = defineProps({
     width: { type: Number, default: 700, required: false },
-    height: { type: Number, default: 400, required: false },
+    height: { type: Number, default: 73, required: false },
 });
 
 const canvasState: DrawableCanvasState = reactive({
@@ -111,25 +113,34 @@ const inferenceButtonText = computed(() => {
     return isPerformingInference.value ? "⌛ Genkender..." : "Genkend";
 });
 
+
+
 </script>
 
 <template>
     <div class="drawable-canvas">
-        <div class="toolbar">
-            <button @click="changeStylusState();">{{ stylusStateButtonText }}</button>
-            <button @click="clearCanvas()">Slet alt</button>
+        <div class="left-bar">
             <button @click="changeDrawingMode()">
                 <img :src="drawingModeIcon" width="32" height="32" />
             </button>
-            <button @click="performInference()" :disabled="isPerformingInference">
-                {{ inferenceButtonText }}
+            <button @click="changeStylusState();" class="stylus-state">
+                {{ stylusStateButtonText }}
             </button>
         </div>
-        <div class="canvas">
+
+        <div class="canvas-box">
+            <div class="toolbar"> 
+                <label><input type="radio" v-model="canvasState.isEraserActivated" :value="false" :name="stylusModeRadioId" />Skriv</label>
+                <label><input type="radio" v-model="canvasState.isEraserActivated" :value="true" :name="stylusModeRadioId" />Viske</label>
+                <button @click="clearCanvas()">Slet alt</button>
+                <button @click="performInference()" :disabled="isPerformingInference">
+                    {{ inferenceButtonText }}
+                </button>
+            </div>
             <canvas :id="canvasId" :width="width" :height="height"></canvas>
-        </div>
-        <div class="result">
-            <input type="text" :value="resultText" />
+            <div class="result">
+                <input type="text" :value="resultText" />
+            </div>
         </div>
     </div>
 </template>
@@ -137,14 +148,44 @@ const inferenceButtonText = computed(() => {
 <style scoped>
 .drawable-canvas {
     padding-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.left-bar {
+    padding-top: 30px;
+    width: 40px;;
+}
+.left-bar button {
+    background-color: #F3F3F3;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    margin: 0;
+    font-size: 17px;
+    border: solid 1px #808080;
+    border-radius: 2px;
+}
+.canvas-box .toolbar {
+    height: 30px;
+}
+.canvas-box .toolbar button {
+    margin-left: 10px;
+    border: solid 1px #808080;
+    border-radius: 2px;
+    background-color: #F3F3F3;
 }
 canvas {
-    border: solid 1px rgb(0, 149, 17);
+    border: solid 1px rgb(131, 131, 131);
+}
+
+.result  {
+    padding-top: 5px;
 }
 .result input {
     padding: 5px;
-    width: 690px;
+    width: 400px;
     font-size: 1.2em;
 }
+
 </style>
   

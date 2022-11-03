@@ -4,9 +4,9 @@ import DrawingCanvas from "./components/DrawableCanvas.vue"
 
 <template>
   <h1>Håndskriftsgenkendelse</h1>
-  <DrawingCanvas :width="700" :height="70" />
-  <DrawingCanvas :width="700" :height="70" />
-  <DrawingCanvas :width="700" :height="70" />
+  <DrawingCanvas />
+  <DrawingCanvas />
+  <DrawingCanvas />
 </template>
 
 <style scoped>
