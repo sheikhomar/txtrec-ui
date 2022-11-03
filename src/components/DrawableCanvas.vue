@@ -38,7 +38,7 @@ function changeStylusState() {
 }
 
 function clearCanvas() {
-    var confirmClearCanvas = confirm("Er du sikker på at du vil slette alt?");
+    var confirmClearCanvas = confirm("Er du sikker på at du vil rydde linjen?");
     if (canvasManager && confirmClearCanvas) {
         canvasManager.clearCanvas();
         canvasState.isEraserActivated = false;
@@ -119,8 +119,6 @@ const inferenceButtonText = computed(() => {
     return isPerformingInference.value ? "⌛ Genkender..." : "Genkend";
 });
 
-
-
 </script>
 
 <template>
@@ -138,7 +136,7 @@ const inferenceButtonText = computed(() => {
             <div class="toolbar"> 
                 <label><input type="radio" v-model="canvasState.isEraserActivated" :value="false" :name="stylusModeRadioId" />Skriv</label>
                 <label><input type="radio" v-model="canvasState.isEraserActivated" :value="true" :name="stylusModeRadioId" />Viske</label>
-                <button @click="clearCanvas()">Slet alt</button>
+                <button @click="clearCanvas()">Ryd linje</button>
                 <button @click="performInference()" :disabled="isPerformingInference">
                     {{ inferenceButtonText }}
                 </button>
@@ -182,6 +180,9 @@ const inferenceButtonText = computed(() => {
 }
 canvas {
     border: solid 1px rgb(131, 131, 131);
+}
+.toolbar label {
+    margin-right: 7px;
 }
 </style>
   
