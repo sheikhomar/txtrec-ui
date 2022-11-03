@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onMounted } from 'vue'
 
 import DrawingCanvas from "./components/DrawableCanvas.vue";
 
 const children = ref([DrawingCanvas, DrawingCanvas]);
+
+const beforeWindowUnload = (e: Event) => {
+  e.preventDefault();
+  e.returnValue = true;
+  return "Er du sikker på at du vil forlade siden? Du mister al dit arbejde.";
+};
 
 const addNewComponent = () => {
   children.value.push(DrawingCanvas);
@@ -14,6 +20,11 @@ const addNewComponent = () => {
     });
   });
 }
+
+onMounted(() => {
+  window.addEventListener('beforeunload', beforeWindowUnload)
+});
+
 </script>
 
 <template>
