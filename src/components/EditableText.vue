@@ -33,7 +33,15 @@ const cancelButtonClick = () => {
     <div class="result">
         <div class="result__text">
             <div v-if="isEditMode" class="edit-mode">
-                <input type="text" v-model="edittedText" v-focus/>
+                <input 
+                    v-model="edittedText"
+                    v-focus
+                    type="text"
+                    spellcheck="false"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                />
                 <button @click="saveButtonClick">Gem</button>
                 <button @click="cancelButtonClick">Annuller</button>
             </div>
