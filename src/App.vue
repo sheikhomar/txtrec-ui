@@ -6,9 +6,12 @@ import DrawingCanvas from "./components/DrawableCanvas.vue";
 const children = ref([DrawingCanvas, DrawingCanvas]);
 
 const beforeWindowUnload = (e: Event) => {
-  e.preventDefault();
-  e.returnValue = true;
-  return "Er du sikker på at du vil forlade siden? Du mister al dit arbejde.";
+  e = e || window.event;
+  const msg = "Er du sikker på at du vil forlade siden? Du mister al dit arbejde.";
+  if (e) {
+    e.returnValue = msg;
+  }
+  return msg;
 };
 
 const addNewComponent = () => {
@@ -22,7 +25,7 @@ const addNewComponent = () => {
 }
 
 onMounted(() => {
-  window.addEventListener('beforeunload', beforeWindowUnload)
+  window.addEventListener("beforeunload", beforeWindowUnload)
 });
 
 </script>
