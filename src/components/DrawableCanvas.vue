@@ -146,7 +146,7 @@ const inferenceButtonText = computed(() => {
                 </button>
                 <span v-if="errorMsg.length > 0" class="error">📢 Der opstod en fejl: {{ errorMsg }}</span>
             </div>
-            <canvas :id="canvasId" :width="width" :height="height"></canvas>
+            <canvas :id="canvasId" :width="width" :height="height" :class="canvasState.isEraserActivated ? 'eraser': ''"></canvas>
             <div class="result">
                 <EditableText :text="resultText" @text:update="textUpdated" />
             </div>
@@ -181,6 +181,9 @@ const inferenceButtonText = computed(() => {
 }
 canvas {
     border: solid 1px rgb(131, 131, 131);
+}
+canvas.eraser {
+    cursor: url("cursor-eraser.png"), pointer
 }
 .toolbar label {
     margin-right: 7px;
